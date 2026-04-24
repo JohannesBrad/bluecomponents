@@ -1,4 +1,7 @@
+import React from 'react';
 import BrandGrid from './components/BrandGrid';
+
+type HeroBgType = 'dots' | 'blueprint' | 'scanline' | 'perspective';
 
 export default function App() {
   return (
@@ -10,14 +13,16 @@ export default function App() {
             <span className="text-[#00A6FB] font-mono text-[10px] uppercase tracking-widest opacity-60">System Identity / BR Blue</span>
             <h1 className="text-4xl font-display font-bold text-white mt-2 leading-none uppercase tracking-tighter">Core<br/>Software</h1>
           </div>
+          
           <div className="hidden md:block text-right">
             <p className="text-white/20 font-mono text-[10px] uppercase tracking-widest italic">// STATIONERY MS-02<br/>BR BLUE CORP</p>
+            <p className="text-[#00A6FB]/40 font-mono text-[8px] uppercase tracking-widest mt-2">Perspective Field v2.4</p>
           </div>
         </div>
 
         {/* The Grid Container - Matching Theme structure */}
         <div className="relative group p-1 bg-[#0a0c10]">
-          <BrandGrid />
+          <BrandGrid heroBackground="perspective" />
         </div>
 
         {/* Footer info */}

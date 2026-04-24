@@ -41,13 +41,79 @@ const GridItem = ({ children, className = "", title = "" }: { children: React.Re
   </motion.div>
 );
 
-export default function BrandGrid() {
+type HeroBgType = 'dots' | 'blueprint' | 'scanline' | 'perspective';
+
+export default function BrandGrid({ heroBackground = 'dots' }: { heroBackground?: HeroBgType }) {
+  const getHeroBackground = () => {
+    switch (heroBackground) {
+      case 'dots':
+        return (
+          <div 
+            className="absolute inset-0 opacity-40" 
+            style={{ 
+              backgroundImage: 'radial-gradient(rgba(0, 166, 251, 0.6) 1px, transparent 1px)', 
+              backgroundSize: '24px 24px' 
+            }} 
+          />
+        );
+      case 'blueprint':
+        return (
+          <div 
+            className="absolute inset-0 opacity-20" 
+            style={{ 
+              backgroundImage: `
+                linear-gradient(rgba(0, 166, 251, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 166, 251, 0.3) 1px, transparent 1px),
+                linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 166, 251, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px'
+            }} 
+          />
+        );
+      case 'scanline':
+        return (
+          <div className="absolute inset-0 overflow-hidden">
+            <div 
+              className="absolute inset-0 opacity-10" 
+              style={{ 
+                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 166, 251, 1) 2px, rgba(0, 166, 251, 1) 4px)' 
+              }} 
+            />
+            <motion.div 
+               animate={{ y: ['-100%', '100%'] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-0 w-full h-1/2 bg-gradient-to-b from-transparent via-[#00A6FB]/10 to-transparent pointer-events-none"
+            />
+          </div>
+        );
+      case 'perspective':
+        return (
+          <div className="absolute inset-0 [perspective:800px] flex items-center justify-center overflow-hidden">
+            <motion.div 
+              animate={{ rotateX: [20, 30, 20], rotateZ: [0, 5, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="w-[200%] h-[200%] opacity-20"
+              style={{ 
+                backgroundImage: 'linear-gradient(rgba(0, 166, 251, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 166, 251, 0.5) 1px, transparent 1px)',
+                backgroundSize: '60px 60px',
+                transformStyle: 'preserve-3d'
+              }}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="w-full max-w-[1200px] aspect-square mx-auto p-4 md:p-8 grid grid-cols-12 grid-rows-12 gap-2 md:gap-3 font-sans text-white bg-[#0a0c10] border border-[#1f2937] shadow-2xl relative selection:bg-[#00A6FB] selection:text-white">
       
       {/* 1. Main Logo / Hero - Big Impact */}
       <GridItem className="col-span-12 md:col-span-6 row-span-4 flex items-center justify-center bg-gradient-to-br from-[#001D4A] to-[#006992] overflow-hidden" title="Project / BR Blue">
         <div className="relative w-full h-full flex items-center justify-center">
+            {getHeroBackground()}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,166,251,0.2),transparent_70%)]" />
             <motion.div 
               animate={{ opacity: [0.8, 1, 0.8] }}
